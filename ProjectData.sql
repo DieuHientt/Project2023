@@ -20,8 +20,6 @@ CREATE TABLE transactions (
 	note VARCHAR(255) NOT NULL,
 	card_id BIGINT,
 	wallet_id BIGINT,
-	outcome_id BIGINT,
-	income_id BIGINT,
 	CONSTRAINT transactions_card
         FOREIGN KEY (card_id)
         REFERENCES card (card_id),

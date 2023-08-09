@@ -1,4 +1,4 @@
-package com.alibou.keycloak.model;
+package com.alibou.keycloak.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -6,22 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.math.BigInteger;
-import java.util.Date;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "income")
-public class income {
+@Table(name = "report")
+public class report {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private BigInteger income_id;
-    private Date date_time;
+    private BigInteger report_id;
+    private String name_report;
+    private String type_report;
 
-    @ManyToOne
-    @JoinColumn(name = "transaction_id",nullable = false,referencedColumnName = "transaction_id")
+    @ManyToMany(mappedBy = "report")
     @JsonBackReference
-    private transactions transactions;
+    private Set<user_model> userModel;
 }

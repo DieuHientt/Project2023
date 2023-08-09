@@ -1,4 +1,4 @@
-package com.alibou.keycloak.model;
+package com.alibou.keycloak.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;

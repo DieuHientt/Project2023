@@ -1,7 +1,8 @@
-package com.alibou.keycloak.model;
+package com.alibou.keycloak.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,29 +23,30 @@ public class transactions {
     private BigInteger transaction_id;
     private int amount;
     private String note;
-    @ManyToOne
-    @JoinColumn(name = "card_id",nullable = false,referencedColumnName = "card_id")
-    @JsonBackReference
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "card_id")
+    @JsonManagedReference
     private card card;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "transaction_category",
             joinColumns = @JoinColumn(name = "transaction_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonManagedReference
+    @JsonIgnore
     private Set<category> category;
 
-    @OneToMany(mappedBy = "transactions", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "transactions")
+    @JsonIgnore
     private Set<income> income;
 
-    @OneToMany(mappedBy = "transactions", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "transactions")
+    @JsonIgnore
     private Set<outcome> outcome;
 
-    @ManyToOne
-    @JoinColumn(name = "wallet_id",nullable = false,referencedColumnName = "wallet_id")
-    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "wallet_id")
+    @JsonIgnore
     private wallet wallet;
 
 }

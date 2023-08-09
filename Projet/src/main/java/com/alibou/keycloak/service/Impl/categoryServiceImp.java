@@ -42,7 +42,7 @@ public class categoryServiceImp implements categoryService {
     @Override
     public category updateCategory(BigInteger categoryId, Map<String, String> formData) {
         category existingCategory = categoryRepository.findById(categoryId).orElse(null);
-        if (existingCategory != null) {
+        if (existingCategory != null) {  //Kiểm tra đối tượng có tồn tại
             String nameCategory = formData.get("name_category");
             existingCategory.setName_category(nameCategory);
             return categoryRepository.save(existingCategory);

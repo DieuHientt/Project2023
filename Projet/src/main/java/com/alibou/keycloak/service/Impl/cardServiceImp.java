@@ -1,9 +1,7 @@
 package com.alibou.keycloak.service.Impl;
-
-
-import com.alibou.keycloak.model.card;
-import com.alibou.keycloak.repository.cardRepository;
-import com.alibou.keycloak.service.cardService;
+import com.hon.keycloak.model.card;
+import com.hon.keycloak.repository.cardRepository;
+import com.hon.keycloak.service.cardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +11,12 @@ import java.util.Map;
 @Service
 public class cardServiceImp implements cardService {
     private final cardRepository cardRepository;
-
     @Autowired
-    public cardServiceImp(cardRepository cardRepository) {
+    public cardServiceImp(com.hon.keycloak.repository.cardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
-
-    public List<card> getAllCard() {
-        return cardRepository
-                .findAll();
+    public List<card> getAllCard(){
+        return cardRepository.findAll();
     }
 
     @Override
@@ -44,7 +39,7 @@ public class cardServiceImp implements cardService {
     @Override
     public card updateCard(BigInteger cardId, Map<String, String> formData) {
         card existingCard = cardRepository.findById(cardId).orElse(null);
-        if (existingCard != null) {
+        if (existingCard != null) {  //Kiểm tra đối tượng có tồn tại
             String amount = formData.get("amount");
             String cardNumber = formData.get("card_number");
             String symbol = formData.get("symbol");
@@ -56,3 +51,4 @@ public class cardServiceImp implements cardService {
         return null;
     }
 }
+//

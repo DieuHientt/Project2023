@@ -1,6 +1,7 @@
-package com.alibou.keycloak.model;
+package com.alibou.keycloak.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,8 +25,8 @@ public class wallet {
     private int total;
     private BigInteger keycloak_id;
 
-    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<transactions> transactions;
 
     @ManyToMany(cascade = CascadeType.ALL)

@@ -1,6 +1,6 @@
 package com.alibou.keycloak.repository;
 
-import com.alibou.keycloak.model.card_brand;
+import com.alibou.keycloak.entity.card_brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

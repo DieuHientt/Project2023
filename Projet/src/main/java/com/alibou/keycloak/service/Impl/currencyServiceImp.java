@@ -1,7 +1,6 @@
 package com.alibou.keycloak.service.Impl;
 
-import com.alibou.keycloak.model.currency;
-import com.alibou.keycloak.model.wallet;
+import com.alibou.keycloak.entity.currency;
 import com.alibou.keycloak.repository.currencyRepository;
 import com.alibou.keycloak.service.currencyService;
 import org.springframework.beans.factory.annotation.Autowired;

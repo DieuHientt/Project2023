@@ -1,6 +1,6 @@
 package com.alibou.keycloak.service;
 
-import com.alibou.keycloak.model.transactions;
+import com.alibou.keycloak.entity.transactions;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;

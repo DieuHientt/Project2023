@@ -2,7 +2,7 @@ package com.alibou.keycloak.service;
 
 
 
-import com.alibou.keycloak.model.card;
+import com.alibou.keycloak.entity.card;
 import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.List;

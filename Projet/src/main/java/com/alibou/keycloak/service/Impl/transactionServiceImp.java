@@ -41,7 +41,7 @@ public class transactionServiceImp implements transactionService {
     @Override
     public transactions updateTransaction(BigInteger transactionId, Map<String, String> formData) {
         transactions existingTransaction = transactionRepository.findById(transactionId).orElse(null);
-        if (existingTransaction != null) {
+        if (existingTransaction != null) { //Kiểm tra đối tượng có tồn tại
             String amount = formData.get("amount");
             String note = formData.get("note");
             existingTransaction.setAmount(Integer.parseInt(amount));

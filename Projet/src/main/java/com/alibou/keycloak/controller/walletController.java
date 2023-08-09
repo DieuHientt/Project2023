@@ -1,6 +1,6 @@
 package com.alibou.keycloak.controller;
 
-import com.alibou.keycloak.model.wallet;
+import com.alibou.keycloak.entity.wallet;
 import com.alibou.keycloak.service.walletService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

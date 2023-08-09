@@ -1,9 +1,6 @@
 package com.alibou.keycloak.controller;
 
-import com.alibou.keycloak.model.card_brand;
-import com.alibou.keycloak.model.currency;
-import com.alibou.keycloak.model.wallet;
-import com.alibou.keycloak.service.card_brandService;
+import com.alibou.keycloak.entity.currency;
 import com.alibou.keycloak.service.currencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

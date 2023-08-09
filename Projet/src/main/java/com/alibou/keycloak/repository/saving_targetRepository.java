@@ -1,6 +1,6 @@
 package com.alibou.keycloak.repository;
 
-import com.alibou.keycloak.model.saving_target;
+import com.alibou.keycloak.entity.saving_target;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
