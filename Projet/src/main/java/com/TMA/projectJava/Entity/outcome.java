@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -19,10 +20,12 @@ public class outcome {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger outcome_id;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date date_time;
-    private String status;
-    @ManyToOne ( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "transaction_id")
     @JsonManagedReference
     private transactions transactions;
+//
 }

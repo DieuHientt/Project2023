@@ -20,7 +20,7 @@ public class category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger category_id;
     private String name_category;
-    private String status;
+
     @ManyToMany(mappedBy = "category")
     @JsonBackReference
     private Set<transactions> transactions;

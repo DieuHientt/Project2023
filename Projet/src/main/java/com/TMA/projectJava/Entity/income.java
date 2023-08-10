@@ -1,10 +1,12 @@
 package com.alibou.keycloak.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -18,10 +20,13 @@ public class income {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger income_id;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date date_time;
-    private String status;
-    @ManyToOne ( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "transaction_id")
-    @JsonBackReference
+    @JsonManagedReference
     private transactions transactions;
+
 }

@@ -2,6 +2,7 @@ package com.alibou.keycloak.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,17 +23,17 @@ public class transactions {
     private BigInteger transaction_id;
     private int amount;
     private String note;
-    private String status;
-    @ManyToOne ( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "card_id")
     @JsonManagedReference
     private card card;
 
-    @ManyToMany ( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "transaction_category",
             joinColumns = @JoinColumn(name = "transaction_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @JsonManagedReference
+    @JsonIgnore
     private Set<category> category;
 
     @OneToMany(mappedBy = "transactions")
@@ -43,7 +44,7 @@ public class transactions {
     @JsonBackReference
     private Set<outcome> outcome;
 
-    @ManyToOne( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "wallet_id")
     @JsonManagedReference
     private wallet wallet;

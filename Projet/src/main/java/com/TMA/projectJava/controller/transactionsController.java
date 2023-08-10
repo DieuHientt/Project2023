@@ -13,43 +13,55 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/transaction")
-public class transactionsController {
+public class transactionController {
     @Autowired
-    private final transactionsService transactionsService;
+    private final transactionService transactionService;
 
-    public transactionsController(transactionsService transactionsService) {
-        this.transactionsService = transactionsService;
+    public transactionController(transactionService transactionService) {
+        this.transactionService = transactionService;
     }
-
+    //Find All Transaction
     @GetMapping
     @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<List<transactions>> findAllTransaction() {
-        return ResponseEntity.ok(transactionsService.getAllTransaction());
+        logger.info("Find All Transaction Success");
+        return ResponseEntity.ok(transactionService.getAllTransaction());
     }
-    @GetMapping("/{transactionsId}")
+    //Find Transaction By ID
+    @GetMapping("/{transactionId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<transactions> getTransaction(@PathVariable BigInteger transactionId) {
-        return ResponseEntity.ok((transactions) transactionsService.getTransaction(transactionId));
+        logger.info("Find Transaction Success");
+        return ResponseEntity.ok((transactions) transactionService.getTransaction(transactionId));
     }
+    //Create New Transaction
     @PostMapping
     @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<transactions> saveTransaction(transactions transactions) {
-        transactions savedTransaction = transactionsService.saveTransaction(transactions);
+        transactions savedTransaction = transactionService.saveTransaction(transactions);
+        logger.info("Create Transaction Success");
         return ResponseEntity.ok(savedTransaction);
     }
-    @DeleteMapping("/{transactionsId}")
+    //Delete Transaction By ID
+    @DeleteMapping("/{transactionId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<List<transactions>> deleteTransaction(@PathVariable BigInteger transactionId) {
-        transactionsService.deleteTransaction(transactionId);
-        return ResponseEntity.ok(transactionsService.getAllTransaction());
+
+        transactionService.deleteTransaction(transactionId);
+
+        logger.info("Delete Transaction Success");
+        return ResponseEntity.ok(transactionService.getAllTransaction());
     }
-    @PutMapping("/{transactionsId}")
+    //Update Transaction By ID
+    @PutMapping("/{transactionId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<transactions> updateTransaction(@PathVariable BigInteger transactionId, @RequestParam Map<String, String> formData) {
-        transactions updatedTransactionResult = transactionsService.updateTransaction(transactionId, formData);
+        transactions updatedTransactionResult =transactionService.updateTransaction(transactionId, formData);
         if (updatedTransactionResult != null) {
+            logger.info("Update Transaction Success");
             return ResponseEntity.ok(updatedTransactionResult);
         } else {
+            logger.error("Can Find Transaction Update");
             return ResponseEntity.notFound().build();
         }
     }

@@ -17,62 +17,55 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
-@Data
 @RestController
 @RequestMapping("/card")
 public class cardController {
-
-    @Autowired
-    private final cardRepository cardRepository;
-    @Autowired
-    private final card_brandRepository card_brandRepository;
-
     @Autowired
     private final cardService cardService;
-
+    public cardController(com.hon.keycloak.service.cardService cardService) {
+        this.cardService = cardService;
+    }
+    //Find All Card
     @GetMapping
     @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<List<card>> findAllCard() {
+        logger.info("Find All Card Success");
         return ResponseEntity.ok(cardService.getAllCard());
     }
-
+    //Find Card By ID
     @GetMapping("/{cardId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<card> getCard(@PathVariable BigInteger cardId) {
+        logger.info("Find Card Success");
         return ResponseEntity.ok((card) cardService.getCard(cardId));
     }
+    //Create New Card
     @PostMapping
     @PreAuthorize("hasRole('client_admin')")
-    public ResponseEntity<card> saveCardBrand(card card) {
+    public ResponseEntity<card> saveCard(card card) {
         card savedCard = cardService.saveCard(card);
+        logger.info("Create Card Success");
         return ResponseEntity.ok(savedCard);
     }
+    //Delete Card By ID
     @DeleteMapping("/{cardId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<List<card>> deleteCard(@PathVariable BigInteger cardId) {
         cardService.deleteCard(cardId);
+        logger.info("Delete Card Success");
         return ResponseEntity.ok(cardService.getAllCard());
     }
+    //Update Card By ID
     @PutMapping("/{cardId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<card> updateCard(@PathVariable BigInteger cardId, @RequestParam Map<String, String> formData) {
         card updatedCardResult = cardService.updateCard(cardId, formData);
         if (updatedCardResult != null) {
+            logger.info("Update Card Success");
             return ResponseEntity.ok(updatedCardResult);
         } else {
+            logger.error("Can Find Card Update");
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PutMapping("/{cardId}/card_brand/{card_brandId}")
-    card addCardToCard_brand(
-            @PathVariable BigInteger cardId,
-            @PathVariable BigInteger card_brandId
-    ) {
-        card card = cardRepository.findById(cardId).get();
-        card_brand card_brand = card_brandRepository.findById(card_brandId).get();
-        card.setCard_brand(card_brand);
-        return cardRepository.save(card);
-    }
-
 }
