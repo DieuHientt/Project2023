@@ -1,8 +1,9 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.user_model;
-import com.alibou.keycloak.repository.user_modelRepository;
-import com.alibou.keycloak.service.user_modelService;
+
+import com.hon.keycloak.entity.user_model;
+import com.hon.keycloak.repository.user_modelRepository;
+import com.hon.keycloak.service.user_modelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 
 @Service
 public class user_modelServiceImp implements user_modelService {
-    private  user_modelRepository userModelRepository;
+    private user_modelRepository userModelRepository;
     @Autowired
     public user_modelServiceImp(user_modelRepository userModelRepository) {
         this.userModelRepository = userModelRepository;
@@ -37,8 +38,8 @@ public class user_modelServiceImp implements user_modelService {
     }
 
     @Override
-    public void deleteUserModel(BigInteger userModelId) {
-        userModelRepository.deleteById(userModelId);
+    public List<user_model> getUserModelNotDeleted() {
+        return userModelRepository.findUserModelNotDeleted();
     }
 
     @Override

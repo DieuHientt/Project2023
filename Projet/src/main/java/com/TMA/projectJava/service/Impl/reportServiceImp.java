@@ -1,8 +1,9 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.report;
-import com.alibou.keycloak.repository.reportRepository;
-import com.alibou.keycloak.service.reportService;
+
+import com.hon.keycloak.entity.report;
+import com.hon.keycloak.repository.reportRepository;
+import com.hon.keycloak.service.reportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +38,8 @@ public class reportServiceImp implements reportService {
     }
 
     @Override
-    public void deleteReport(BigInteger reportId) {
-        reportRepository.deleteById(reportId);
+    public List<report> getReportNotDeleted() {
+        return reportRepository.findReportNotDeleted();
     }
 
     @Override

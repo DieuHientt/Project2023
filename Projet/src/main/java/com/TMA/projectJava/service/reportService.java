@@ -1,7 +1,7 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
 
-import com.alibou.keycloak.Entity.report;
+import com.hon.keycloak.entity.report;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,7 +14,7 @@ public interface reportService {
 
     Object getReport(BigInteger reportId);
 
-    void deleteReport(BigInteger reportId);
+    List<report> getReportNotDeleted();
 
     report updateReport(BigInteger reportId, Map<String, String> formData);
 }

@@ -1,6 +1,6 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
-import com.alibou.keycloak.Entity.income;
+import com.hon.keycloak.entity.income;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,7 +12,7 @@ public interface incomeService {
 
     Object getIncome(BigInteger incomeId);
 
-    void deleteIncome(BigInteger incomeId);
+    List<income> getIncomeNotDeleted();
 
     income updateIncome(BigInteger incomeId, Map<String, String> formData);
 }

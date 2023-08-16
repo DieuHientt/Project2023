@@ -1,6 +1,7 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
-import com.alibou.keycloak.Entity.outcome;
+
+import com.hon.keycloak.entity.outcome;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface outcomeService {
 
     Object getOutcome(BigInteger outcomeId);
 
-    void deleteOutcome(BigInteger outcomeId);
+    List<outcome> getOutcomeNotDeleted();
 
     outcome updateOutcome(BigInteger outcomeId, Map<String, String> formData);
 }

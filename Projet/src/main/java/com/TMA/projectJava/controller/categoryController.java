@@ -1,15 +1,17 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-import com.alibou.keycloak.Entity.category;
-import com.alibou.keycloak.service.categoryService;
+import com.hon.keycloak.entity.category;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.categoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
-
+//
 @RestController
 @RequestMapping("/category")
 public class categoryController {
@@ -41,17 +43,17 @@ public class categoryController {
         logger.info("Create Category Success");
         return ResponseEntity.ok(savedCategory);
     }
-    //Delete Category By ID
-    @DeleteMapping("/{categoryId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<category>> deleteCategory(@PathVariable BigInteger categoryId) {
-        categoryService.deleteCategory(categoryId);
+    //Delete Category
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<category>> getCategoryNotDeleted() {
+        List<category> notDeletedCategory = categoryService.getCategoryNotDeleted();
         logger.info("Delete Category Success");
-        return ResponseEntity.ok(categoryService.getAllCategory());
+        return ResponseEntity.ok(notDeletedCategory);
     }
     //Update Category By ID
     @PutMapping("/{categoryId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<category> updateCategory(@PathVariable BigInteger categoryId, @RequestParam Map<String, String> formData) {
         category updatedCategoryResult = categoryService.updateCategory(categoryId, formData);
         if (updatedCategoryResult != null) {

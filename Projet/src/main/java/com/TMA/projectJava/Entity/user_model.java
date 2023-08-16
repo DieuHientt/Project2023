@@ -1,5 +1,4 @@
-package com.alibou.keycloak.Entity;
-
+package com.TMA.projectJava.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -25,20 +24,22 @@ public class user_model {
     private String first_name;
     private String last_name;
     private String status;
-    @OneToOne( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "wallet_id")
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "wallet_id", referencedColumnName = "wallet_id")
     @JsonManagedReference
     private wallet wallet;
 
-    @OneToOne( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "sv_id")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "sv_id", referencedColumnName = "sv_id")
     @JsonManagedReference
     private saving_target savingTarget;
 
-    @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "user_model_report",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "report_id"))
     @JsonManagedReference
     private Set<report> report;
 }
+//

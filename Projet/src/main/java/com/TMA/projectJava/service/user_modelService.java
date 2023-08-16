@@ -1,6 +1,8 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
-import com.alibou.keycloak.Entity.user_model;
+
+import com.hon.keycloak.entity.user_model;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ public interface user_modelService {
 
     Object getUserModel(BigInteger userModelId);
 
-    void deleteUserModel(BigInteger userModelId);
+    List<user_model> getUserModelNotDeleted();
 
     user_model updateUserModel(BigInteger userModelId, Map<String, String> formData);
 }

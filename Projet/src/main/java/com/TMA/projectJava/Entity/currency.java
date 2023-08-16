@@ -1,8 +1,6 @@
-package com.alibou.keycloak.Entity;
+package com.TMA.projectJava.Entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +20,8 @@ public class currency {
     private BigInteger currency_id;
     private String name_currency;
     private String status;
+
     @ManyToMany(mappedBy = "currency")
-    @JsonIgnoreProperties("currency")
+    @JsonManagedReference
     private Set<wallet> wallet;
 }

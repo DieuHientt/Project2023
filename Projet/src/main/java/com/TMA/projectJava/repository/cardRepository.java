@@ -1,10 +1,13 @@
-package com.alibou.keycloak.repository;
+package com.TMA.projectJava.repository;
 
-import com.alibou.keycloak.Entity.card;
+import com.hon.keycloak.entity.card;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.math.BigInteger;
-@Repository
+import java.util.List;
+
 public interface cardRepository extends JpaRepository<card, BigInteger> {
+    @Query(value = "SELECT * FROM card WHERE status <> 'inactive'", nativeQuery = true)
+    List<card> findCardNotDeleted();
 }

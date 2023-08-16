@@ -1,12 +1,13 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-
-import com.alibou.keycloak.Entity.outcome;
-import com.alibou.keycloak.service.outcomeService;
+import com.hon.keycloak.entity.outcome;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.outcomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -42,17 +43,17 @@ public class outcomeController {
         logger.info("Create Outcome Success");
         return ResponseEntity.ok(savedOutcome);
     }
-    //Delete Outcome By ID
-    @DeleteMapping("/{outcomeId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<outcome>> deleteOutcome(@PathVariable BigInteger outcomeId) {
-        outcomeService.deleteOutcome(outcomeId);
+    //Delete Outcome
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<outcome>> getOutcomeNotDeleted() {
+        List<outcome> notDeletedOutcome = outcomeService.getOutcomeNotDeleted();
         logger.info("Delete Outcome Success");
-        return ResponseEntity.ok(outcomeService.getAllOutcome());
+        return ResponseEntity.ok(notDeletedOutcome);
     }
     //Update Outcome By ID
     @PutMapping("/{outcomeId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<outcome> updateOutcome(@PathVariable BigInteger outcomeId, @RequestParam Map<String, String> formData) {
         outcome updatedOutcomeResult =outcomeService.updateOutcome(outcomeId, formData);
         if (updatedOutcomeResult != null) {

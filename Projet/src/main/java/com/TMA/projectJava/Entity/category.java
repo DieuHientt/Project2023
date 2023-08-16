@@ -1,7 +1,6 @@
-package com.alibou.keycloak.Entity;
+package com.TMA.projectJava.Entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +19,9 @@ public class category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger category_id;
     private String name_category;
+    private String status;
 
     @ManyToMany(mappedBy = "category")
-    @JsonBackReference
+    @JsonManagedReference
     private Set<transactions> transactions;
 }

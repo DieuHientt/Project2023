@@ -1,6 +1,7 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
-import com.alibou.keycloak.Entity.wallet;
+
+import com.hon.keycloak.entity.wallet;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -14,7 +15,7 @@ public interface walletService {
 
     Object getWallet(BigInteger walletId);
 
-    void deleteWallet(BigInteger walletId);
+    List<wallet> getWalletNotDeleted();
 
     wallet updateWallet(BigInteger walletId, Map<String, String> formData);
 }

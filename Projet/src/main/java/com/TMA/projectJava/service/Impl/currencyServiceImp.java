@@ -1,8 +1,9 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.currency;
-import com.alibou.keycloak.repository.currencyRepository;
-import com.alibou.keycloak.service.currencyService;
+
+import com.hon.keycloak.entity.currency;
+import com.hon.keycloak.repository.currencyRepository;
+import com.hon.keycloak.service.currencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,8 @@ public class currencyServiceImp  implements currencyService {
     }
 
     @Override
-    public void deleteCurrency(BigInteger currencyId) {
-        currencyRepository.deleteById(currencyId);
+    public List<currency> getCurrencyNotDeleted() {
+        return currencyRepository.findCurrencyNotDeleted();
     }
     @Override
     public currency updateCurrency(BigInteger currencyId, Map<String, String> formData) {

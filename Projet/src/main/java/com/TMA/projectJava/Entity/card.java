@@ -1,19 +1,20 @@
-package com.alibou.keycloak.Entity;
+package com.TMA.projectJava.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 import java.util.Set;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @Table(name = "card")
 public class card {
     @Id
@@ -33,4 +34,3 @@ public class card {
     @JsonBackReference
     private Set<transactions> transactions;
 }
-

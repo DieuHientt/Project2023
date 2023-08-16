@@ -1,7 +1,7 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
 
-import com.alibou.keycloak.Entity.saving_target;
+import com.hon.keycloak.entity.saving_target;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,7 +14,7 @@ public interface saving_targetService {
 
     Object getSavingTarget(BigInteger savingTargetId);
 
-    void deleteSavingTarget(BigInteger savingTargetId);
+    List<saving_target> getSavingTargetNotDeleted();
 
     saving_target updateSavingTarget(BigInteger savingTargetId, Map<String, String> formData);
 }

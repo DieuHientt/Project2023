@@ -1,7 +1,8 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-import com.alibou.keycloak.Entity.transactions;
-import com.alibou.keycloak.service.transactionsService;
+import com.hon.keycloak.entity.transactions;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.transactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,19 +43,17 @@ public class transactionController {
         logger.info("Create Transaction Success");
         return ResponseEntity.ok(savedTransaction);
     }
-    //Delete Transaction By ID
-    @DeleteMapping("/{transactionId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<transactions>> deleteTransaction(@PathVariable BigInteger transactionId) {
-
-        transactionService.deleteTransaction(transactionId);
-
+    //Delete Transaction
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<transactions>> getTransactionNotDeleted() {
+        List<transactions> notDeletedTransaction = transactionService.getTransactionNotDeleted();
         logger.info("Delete Transaction Success");
-        return ResponseEntity.ok(transactionService.getAllTransaction());
+        return ResponseEntity.ok(notDeletedTransaction);
     }
     //Update Transaction By ID
     @PutMapping("/{transactionId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<transactions> updateTransaction(@PathVariable BigInteger transactionId, @RequestParam Map<String, String> formData) {
         transactions updatedTransactionResult =transactionService.updateTransaction(transactionId, formData);
         if (updatedTransactionResult != null) {

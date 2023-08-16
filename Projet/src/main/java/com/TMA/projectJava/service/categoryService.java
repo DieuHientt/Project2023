@@ -1,8 +1,7 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
+import com.hon.keycloak.entity.category;
 
-
-import com.alibou.keycloak.Entity.category;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ public interface categoryService {
 
     Object getCategory(BigInteger categoryId);
 
-    void deleteCategory(BigInteger categoryId);
+    List<category> getCategoryNotDeleted();
 
     category updateCategory(BigInteger categoryId, Map<String, String> formData);
 }

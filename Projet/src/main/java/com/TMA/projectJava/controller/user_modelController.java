@@ -1,7 +1,9 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-import com.alibou.keycloak.Entity.user_model;
-import com.alibou.keycloak.service.user_modelService;
+
+import com.hon.keycloak.entity.user_model;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.user_modelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,36 +19,46 @@ public class user_modelController  {
 
     @Autowired
     private user_modelService userModelService;
-
+    //Find All User Model
     @GetMapping
     @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<List<user_model>> findAllUserModel() {
+        logger.info("Find All User Model Success");
         return ResponseEntity.ok(userModelService.getAllUserModel());
     }
+    //Find User Model By ID
     @GetMapping("/{userModelId}")
     @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<user_model> getUserModel(@PathVariable BigInteger userModelId) {
+        logger.info("Find User Model Success");
         return ResponseEntity.ok((user_model) userModelService.getUserModel(userModelId));
     }
+    //Create New User Model
     @PostMapping
     @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<user_model> saveUserModel(user_model userModel) {
         user_model savedUserModel = userModelService.saveUserModel(userModel);
+        logger.info("Create User Model Success");
         return ResponseEntity.ok(savedUserModel);
     }
-    @DeleteMapping("/{userModelId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<user_model>> deleteUserModel(@PathVariable BigInteger userModelId) {
-        userModelService.deleteUserModel(userModelId);
-        return ResponseEntity.ok(userModelService.getAllUserModel());
+    //Delete User Model
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<user_model>> getUserModelNotDeleted() {
+        List<user_model> notDeletedUserModel = userModelService.getUserModelNotDeleted();
+        logger.info("Delete User Model Success");
+        return ResponseEntity.ok(notDeletedUserModel);
     }
+    //Update User Model By ID
     @PutMapping("/{userModelId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<user_model> updateUserModel(@PathVariable BigInteger userModelId, @RequestParam Map<String, String> formData) {
         user_model updatedReportResult  = userModelService.updateUserModel(userModelId, formData);
         if (updatedReportResult != null) {
+            logger.info("Update User Model Success");
             return ResponseEntity.ok(updatedReportResult);
         } else {
+            logger.error("Can Find User Model Update");
             return ResponseEntity.notFound().build();
         }
     }

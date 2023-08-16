@@ -1,18 +1,13 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-
-import com.alibou.keycloak.Entity.card;
-import com.alibou.keycloak.Entity.card_brand;
-import com.alibou.keycloak.repository.cardRepository;
-import com.alibou.keycloak.repository.card_brandRepository;
-import com.alibou.keycloak.service.cardService;
-import lombok.Data;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
+import com.hon.keycloak.entity.card;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.cardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -47,17 +42,17 @@ public class cardController {
         logger.info("Create Card Success");
         return ResponseEntity.ok(savedCard);
     }
-    //Delete Card By ID
-    @DeleteMapping("/{cardId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<card>> deleteCard(@PathVariable BigInteger cardId) {
-        cardService.deleteCard(cardId);
+    //Delete Card
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<card>> getCardNotDeleted() {
+        List<card> notDeletedCards = cardService.getCardNotDeleted();
         logger.info("Delete Card Success");
-        return ResponseEntity.ok(cardService.getAllCard());
+        return ResponseEntity.ok(notDeletedCards);
     }
     //Update Card By ID
     @PutMapping("/{cardId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<card> updateCard(@PathVariable BigInteger cardId, @RequestParam Map<String, String> formData) {
         card updatedCardResult = cardService.updateCard(cardId, formData);
         if (updatedCardResult != null) {

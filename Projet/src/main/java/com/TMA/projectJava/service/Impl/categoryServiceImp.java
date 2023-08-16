@@ -1,10 +1,11 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.category;
-import com.alibou.keycloak.repository.categoryRepository;
-import com.alibou.keycloak.service.categoryService;
+import com.hon.keycloak.entity.category;
+import com.hon.keycloak.repository.categoryRepository;
+import com.hon.keycloak.service.categoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +36,13 @@ public class categoryServiceImp implements categoryService {
     }
 
     @Override
-    public void deleteCategory(BigInteger categoryId) {
-        categoryRepository.deleteById(categoryId);
+    public List<category> getCategoryNotDeleted() {
+        return categoryRepository.findCategoryNotDeleted();
     }
     @Override
     public category updateCategory(BigInteger categoryId, Map<String, String> formData) {
         category existingCategory = categoryRepository.findById(categoryId).orElse(null);
-        if (existingCategory != null) {
+        if (existingCategory != null) {  //Kiểm tra đối tượng có tồn tại
             String nameCategory = formData.get("name_category");
             existingCategory.setName_category(nameCategory);
             String status = formData.get("status");

@@ -1,13 +1,14 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-import com.alibou.keycloak.Entity.card_brand;
-import com.alibou.keycloak.repository.cardRepository;
-import com.alibou.keycloak.repository.card_brandRepository;
-import com.alibou.keycloak.service.card_brandService;
+
+import com.hon.keycloak.entity.card_brand;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.card_brandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/card_brand")
 public class card_brandController {
     @Autowired
-    private final card_brandService cardBrandService;
+    private  card_brandService cardBrandService;
 
     public card_brandController(card_brandService cardBrandService) {
         this.cardBrandService = cardBrandService;
@@ -44,17 +45,16 @@ public class card_brandController {
         logger.info("Create Card Brand Success");
         return ResponseEntity.ok(savedCardBrand);
     }
-    //Delete Card Brand By ID
-    @DeleteMapping("/{cardBrandId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<card_brand>> deleteCardBrand(@PathVariable BigInteger cardBrandId) {
-        cardBrandService.deleteCardBrand(cardBrandId);
+    //Delete Card Brand
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public List<card_brand> getCardBrandNotDeleted() {
         logger.info("Delete Card Brand Success");
-        return ResponseEntity.ok(cardBrandService.getAllCardBrand());
+        return cardBrandService.getCardBrandNotDeleted();
     }
     //Update Card Brand By ID
     @PutMapping("/{cardBrandId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<card_brand> updateCardBrand(@PathVariable BigInteger cardBrandId, @RequestParam Map<String, String> formData) {
         card_brand updatedCardBrandResult = cardBrandService.updateCardBrand(cardBrandId, formData);
         if (updatedCardBrandResult != null) {

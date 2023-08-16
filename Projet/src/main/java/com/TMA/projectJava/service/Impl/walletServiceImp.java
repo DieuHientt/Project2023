@@ -1,9 +1,9 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
 
-import com.alibou.keycloak.Entity.wallet;
-import com.alibou.keycloak.repository.walletRepository;
-import com.alibou.keycloak.service.walletService;
+import com.hon.keycloak.entity.wallet;
+import com.hon.keycloak.repository.walletRepository;
+import com.hon.keycloak.service.walletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +37,9 @@ public class walletServiceImp implements walletService {
                 .findById(walletId)
                 .orElse(null);
     }
-
     @Override
-    public void deleteWallet(BigInteger walletId) {
-        walletRepository.deleteById(walletId);
+    public List<wallet> getWalletNotDeleted() {
+        return walletRepository.findWalletNotDeleted();
     }
     @Override
     public wallet updateWallet(BigInteger walletId, Map<String, String> formData) {

@@ -1,18 +1,19 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.transactions;
-import com.alibou.keycloak.repository.transactionRepository;
-import com.alibou.keycloak.service.transactionsService;
+import com.hon.keycloak.entity.transactions;
+import com.hon.keycloak.repository.transactionRepository;
+import com.hon.keycloak.service.transactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 @Service
-public class transactionsServiceImp implements transactionsService {
-    private transactionRepository transactionRepository;
+public class transactionServiceImp implements transactionService {
+    private final transactionRepository transactionRepository;
     @Autowired
-    public transactionsServiceImp(transactionRepository transactionRepository) {
+    public transactionServiceImp(transactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
     public List<transactions> getAllTransaction(){
@@ -34,13 +35,13 @@ public class transactionsServiceImp implements transactionsService {
     }
 
     @Override
-    public void deleteTransaction(BigInteger transactionId) {
-        transactionRepository.deleteById(transactionId);
+    public List<transactions> getTransactionNotDeleted() {
+        return transactionRepository.findTransactionNotDeleted();
     }
     @Override
     public transactions updateTransaction(BigInteger transactionId, Map<String, String> formData) {
         transactions existingTransaction = transactionRepository.findById(transactionId).orElse(null);
-        if (existingTransaction != null) {
+        if (existingTransaction != null) { //Kiểm tra đối tượng có tồn tại
             String amount = formData.get("amount");
             String note = formData.get("note");
             existingTransaction.setAmount(Integer.parseInt(amount));
@@ -52,3 +53,4 @@ public class transactionsServiceImp implements transactionsService {
         return null;
     }
 }
+//

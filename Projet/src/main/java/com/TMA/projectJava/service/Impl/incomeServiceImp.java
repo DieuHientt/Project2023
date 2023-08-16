@@ -1,16 +1,18 @@
-package com.alibou.keycloak.service.Impl;
+package com.TMA.projectJava.service.Impl;
 
-import com.alibou.keycloak.Entity.income;
-import com.alibou.keycloak.repository.incomeRepository;
-import com.alibou.keycloak.service.incomeService;
+import com.hon.keycloak.entity.income;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.repository.incomeRepository;
+import com.hon.keycloak.service.incomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.util.Date;
+
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.time.ZoneId;
 @Service
 public class incomeServiceImp implements incomeService {
     private final incomeRepository incomeRepository;
@@ -37,25 +39,29 @@ public class incomeServiceImp implements incomeService {
     }
 
     @Override
-    public void deleteIncome(BigInteger incomeId) {
-        incomeRepository.deleteById(incomeId);
+    public List<income> getIncomeNotDeleted() {
+        return incomeRepository.findIncomeNotDeleted();
     }
     @Override
     public income updateIncome(BigInteger incomeId, Map<String, String> formData) {
         income existingIncome = incomeRepository.findById(incomeId).orElse(null);
-        if (existingIncome != null) {
+        if (existingIncome != null) {   //Kiểm tra đối tượng có tồn tại
             String dateTimeStr = formData.get("date_time");
-
-            // Chuyển đổi chuỗi ngày thành đối tượng LocalDateTime
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr);
-
-            // Chuyển đổi LocalDateTime thành java.util.Date
-            Date date = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
-
-            existingIncome.setDate_time(date);
-            String status = formData.get("status");
-            existingIncome.setStatus(status);
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date dateTime = dateFormat.parse(dateTimeStr);
+                existingIncome.setDate_time(dateTime);
+                String status = formData.get("status");
+                existingIncome.setStatus(status);
+                return incomeRepository.save(existingIncome);
+            } catch (ParseException e) {
+                // Xử lý lỗi khi không thể chuyển đổi chuỗi thành ngày tháng
+                logger.error("Can Change String To Date");
+                e.printStackTrace();
+                return null;
+            }
         }
         return null;
     }
 }
+//

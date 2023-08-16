@@ -1,11 +1,10 @@
-package com.alibou.keycloak.Entity;
+package com.TMA.projectJava.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 import java.math.BigInteger;
 import java.util.Set;
@@ -22,7 +21,8 @@ public class report {
     private String name_report;
     private String type_report;
     private String status;
-    @ManyToMany(mappedBy = "report" )
-    @JsonBackReference
+
+    @ManyToMany(mappedBy = "report")
+    @JsonManagedReference
     private Set<user_model> userModel;
 }

@@ -1,6 +1,8 @@
-package com.alibou.keycloak.service;
+package com.TMA.projectJava.service;
 
-import com.alibou.keycloak.Entity.currency;
+
+import com.hon.keycloak.entity.currency;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ public interface currencyService {
 
     Object getCurrency(BigInteger currencyId);
 
-    void deleteCurrency(BigInteger currencyId);
+    List<currency> getCurrencyNotDeleted();
 
     currency updateCurrency(BigInteger currencyId, Map<String, String> formData);
 }

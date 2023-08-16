@@ -1,8 +1,8 @@
-package com.alibou.keycloak.controller;
+package com.TMA.projectJava.controller;
 
-
-import com.alibou.keycloak.Entity.income;
-import com.alibou.keycloak.service.incomeService;
+import com.hon.keycloak.entity.income;
+import com.hon.keycloak.log.logger;
+import com.hon.keycloak.service.incomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,17 +43,17 @@ public class incomeController {
         logger.info("Create Income Success");
         return ResponseEntity.ok(savedIncome);
     }
-    //Delete Income By ID
-    @DeleteMapping("/{incomeId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<List<income>> deleteIncome(@PathVariable BigInteger incomeId) {
-        incomeService.deleteIncome(incomeId);
+    //Delete Income
+    @GetMapping("/not-deleted")
+    @PreAuthorize("hasRole('client_admin')")
+    public ResponseEntity<List<income>> getIncomeNotDeleted() {
+        List<income> notDeletedIncome = incomeService.getIncomeNotDeleted();
         logger.info("Delete Income Success");
-        return ResponseEntity.ok(incomeService.getAllIncome());
+        return ResponseEntity.ok(notDeletedIncome);
     }
     //Update Income By ID
     @PutMapping("/{incomeId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<income> updateIncome(@PathVariable BigInteger incomeId, @RequestParam Map<String, String> formData) {
         income updatedIncomeResult =incomeService.updateIncome(incomeId, formData);
         if (updatedIncomeResult != null) {

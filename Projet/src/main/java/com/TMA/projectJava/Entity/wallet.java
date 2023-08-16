@@ -1,5 +1,4 @@
-package com.alibou.keycloak.Entity;
-
+package com.TMA.projectJava.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -25,11 +24,12 @@ public class wallet {
     private int total;
     private BigInteger keycloak_id;
     private String status;
+
     @OneToMany(mappedBy = "wallet")
     @JsonBackReference
     private Set<transactions> transactions;
 
-    @ManyToMany( cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "wallet_currency",
             joinColumns = @JoinColumn(name = "wallet_id"),
             inverseJoinColumns = @JoinColumn(name = "currency_id"))
